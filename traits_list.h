@@ -12,40 +12,81 @@ class TraitsList {
     private:
         Node<T>* head;
         Operation cmp;
+        unsigned int nodes;
 
         bool find(T data, Node<T> **&pointer) {
-            // TODO
+            pointer = &head;
+            while(*pointer != nullptr) {
+                if (cmp((*pointer)->data, data)) {
+                    if ((*pointer)->data == data)
+                        return true;
+                }
+                else
+                    return false;
+                pointer = &((*pointer)->next);
+            }
+            return false;
         }
               
     public:
-        TraitsList() : head(nullptr) {};
+        TraitsList() : head(nullptr), nodes(0) {};
              
         bool insert(T data) {
-            // TODO
+            Node<T> **pointer = nullptr;
+            if(!find(data,pointer)){
+                auto newNode = new Node<T>(data);
+                newNode->next = *pointer;
+                *pointer = newNode;
+                nodes++;
+                return true;
+            }
+            return false;
         }
              
         bool remove(T data) {
-            // TODO
+            Node<T> **pointer = &head;
+            if (find(data, pointer)){
+                Node<T>* toDelete = *pointer;
+                *pointer = (*pointer)->next;
+                delete toDelete;
+                nodes--;
+                return true;
+            }
+            return false;
         }  
 
         bool find(T data) {
-            // TODO
+            Node<T> **pointer = nullptr;
+            return find(data, pointer);
         }
 
         T operator [] (int index) {
-            // TODO
+            if (size() >= 0 and index < size()){
+                auto currentNode = head;
+                for (unsigned int i = 0; i < index; ++i)
+                    currentNode = currentNode->next;
+                return currentNode->data;
+            }
+            throw out_of_range("Index out of range.");
         }
              
         int size() {
-            // TODO
+            return nodes;
         }
 
         void print() {
-            // TODO
+            if (head != nullptr) {
+                auto currentNode = head;
+                for (unsigned int i = 0; i < size(); ++i, currentNode = currentNode->next)
+                    cout << currentNode->data << ' ';
+                cout << '\n';
+            } else
+                cout << "The list is empty.\n";
         }
 
         ~TraitsList() {
-            // TODO
+            if (head != nullptr)
+                head->killSelf();
         }         
 };
 
