@@ -63,6 +63,7 @@ class SelfList {
             if (size() == 0)
                 return false;
             //auto currentNode = head;
+            // Como recomendación: Podrías crear métodos privados para cada case, y usar un find con puntero doble, como en la traits list para reducir código
             switch (method) {
                 case Move:
                     if (head->data == data)

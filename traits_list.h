@@ -21,6 +21,7 @@ class TraitsList {
                     if ((*pointer)->data == data)
                         return true;
                 }
+                // Podrías agregar esto a la condición del while para reducir esta línea
                 else
                     return false;
                 pointer = &((*pointer)->next);
